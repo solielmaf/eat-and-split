@@ -2,47 +2,71 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [friendName, setFreindName] = useState();
-  const [friendImage, setFriendImage] = useState();
-  const [isAdded, setIsAdded] = useState(false);
+  const [friendName, setFreindName] = useState("");
+  const [friendImage, setFriendImage] = useState("");
+  const [balance, setBalance] = useState(0);
   const [lists, setList] = useState([]);
-  function handleAdd() {
-    setIsAdded(true);
-    setFreindName("");
-    setFriendImage("");
-  }
+
   function handleAddList(list) {
     setList((lists) => [...lists, list]);
   }
 
   return (
     <>
-      <FriendList friendImage={friendImage} isAdded={isAdded} />
+      <FriendList lists={lists} />
       <AddFriend
         setFreindName={setFreindName}
         friendName={friendName}
+        friendImage={friendImage}
         setFriendImage={setFriendImage}
-        handleAdd={handleAdd}
+        handleAddList={handleAddList}
+        balance={balance}
       />
     </>
   );
 }
-function FriendList({ friendImage, isAdded }) {
+function FriendList({ lists }) {
   return (
     <div>
       <ul>
-        <img
-          src={friendImage}
-          alt="profile"
-          style={{ width: "70PX", height: "70PX", borderRadius: "50%" }}
-        />
+        {lists.map((list) => (
+          <div>
+            <img
+              src={list.friendImage}
+              alt="profile"
+              style={{ width: "70PX", height: "70PX", borderRadius: "50%" }}
+            />
+            {list.friendName}
+          </div>
+        ))}
       </ul>
     </div>
   );
 }
-function AddFriend({ friendName, setFreindName, setFriendImage, handleAdd }) {
+function AddFriend({
+  friendName,
+  setFreindName,
+  setFriendImage,
+  friendImage,
+  handleAddList,
+  balance,
+}) {
+  function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      setFriendImage(URL.createObjectURL(file));
+    }
+  }
+  function handleAdd(event) {
+    event.preventDefault();
+    const newFriend = { friendName, friendImage, balance, id: Date.now() };
+    handleAddList(newFriend);
+    setFreindName("");
+    setFriendImage(null);
+  }
+
   return (
-    <>
+    <form onSubmit={handleAdd}>
       <div>
         👭 Freind Name{" "}
         <input
@@ -56,13 +80,13 @@ function AddFriend({ friendName, setFreindName, setFriendImage, handleAdd }) {
       <input
         type="file"
         accept="image/*"
-        onChange={(e) => setFriendImage(URL.createObjectURL(e.target.files[0]))}
+        onChange={handleImageChange}
         required
       />
       <div>
-        <button onClick={handleAdd}>Add</button>
+        <button>Add</button>
       </div>
-    </>
+    </form>
   );
 }
 function SplitBill() {}
