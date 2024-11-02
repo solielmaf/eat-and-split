@@ -4,25 +4,43 @@ import { useState } from "react";
 function App() {
   const [friendName, setFreindName] = useState();
   const [friendImage, setFriendImage] = useState();
+  const [isAdded, setIsAdded] = useState(false);
+  const [lists, setList] = useState([]);
+  function handleAdd() {
+    setIsAdded(true);
+    setFreindName("");
+    setFriendImage("");
+  }
+  function handleAddList(list) {
+    setList((lists) => [...lists, list]);
+  }
 
   return (
     <>
+      <FriendList friendImage={friendImage} isAdded={isAdded} />
       <AddFriend
         setFreindName={setFreindName}
         friendName={friendName}
         setFriendImage={setFriendImage}
+        handleAdd={handleAdd}
       />
-
-      {/* <img
-        src={friendImage}
-        alt="profile"
-        style={{ width: "70PX", height: "70PX", borderRadius: "50%" }}
-  />*/}
     </>
   );
 }
-function FriendList() {}
-function AddFriend({ friendName, setFreindName, setFriendImage }) {
+function FriendList({ friendImage, isAdded }) {
+  return (
+    <div>
+      <ul>
+        <img
+          src={friendImage}
+          alt="profile"
+          style={{ width: "70PX", height: "70PX", borderRadius: "50%" }}
+        />
+      </ul>
+    </div>
+  );
+}
+function AddFriend({ friendName, setFreindName, setFriendImage, handleAdd }) {
   return (
     <>
       <div>
@@ -31,6 +49,7 @@ function AddFriend({ friendName, setFreindName, setFriendImage }) {
           type="text"
           value={friendName}
           onChange={(e) => setFreindName(e.target.value)}
+          required
         />
       </div>
       🌆 Image URL{" "}
@@ -38,7 +57,11 @@ function AddFriend({ friendName, setFreindName, setFriendImage }) {
         type="file"
         accept="image/*"
         onChange={(e) => setFriendImage(URL.createObjectURL(e.target.files[0]))}
+        required
       />
+      <div>
+        <button onClick={handleAdd}>Add</button>
+      </div>
     </>
   );
 }
