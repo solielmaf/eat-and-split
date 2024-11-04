@@ -5,7 +5,7 @@ function App() {
   const [friendName, setFreindName] = useState("");
   const [friendImage, setFriendImage] = useState("");
   const [balance, setBalance] = useState(0);
-  const [lists, setList] = useState([]);
+  const [lists, setList] = useState([]); //list to stor all friend info
 
   function handleAddList(list) {
     setList((lists) => [...lists, list]);
