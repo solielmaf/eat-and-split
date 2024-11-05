@@ -22,6 +22,7 @@ function App() {
         handleAddList={handleAddList}
         balance={balance}
       />
+      <SplitBill friendName={friendName} />
     </>
   );
 }
@@ -89,6 +90,12 @@ function AddFriend({
     </form>
   );
 }
-function SplitBill() {}
+function SplitBill({ friendName }) {
+  return (
+    <>
+      <h1>Split Bill With {friendName}</h1>
+    </>
+  );
+}
 
 export default App;
