@@ -94,6 +94,21 @@ function SplitBill({ friendName }) {
   return (
     <>
       <h1>Split Bill With {friendName}</h1>
+      <h3>
+        💰 Bill value <input type="number" />
+      </h3>
+      <h3>
+        {" "}
+        🙎‍♀️ Your expense <input type="number" />
+      </h3>
+      <h3>
+        {" "}
+        👭 {friendName}'s expense <input type="number" />
+      </h3>
+      🤑 Who is paying the bill?{" "}
+      <select>
+        <option>You</option> <option>{friendName}</option>
+      </select>
     </>
   );
 }
