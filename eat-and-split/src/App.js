@@ -38,6 +38,7 @@ function FriendList({ lists }) {
               style={{ width: "70PX", height: "70PX", borderRadius: "50%" }}
             />
             {list.friendName}
+            <button>Select</button>
           </div>
         ))}
       </ul>
